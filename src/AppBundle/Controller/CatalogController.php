@@ -14,4 +14,12 @@ class CatalogController extends Controller
     {
         return $this->render('catalog/index.html.twig');
     }
+
+    /**
+     * @Route("/product", name="product")
+     */
+    public function productAction()
+    {
+        return $this->render('default/product.html.twig');
+    }
 }
