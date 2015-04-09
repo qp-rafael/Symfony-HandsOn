@@ -25,21 +25,21 @@ class DefaultController extends Controller
         );
     }
 
-/**
- * @Route("/product/{id}", name="product", requirements={"id": "\d+"})
- */
-public function productAction($id)
-{
-    $product = $this->getDoctrine()
-        ->getRepository('AppBundle:Product')
-        ->findOneById($id);
+    /**
+     * @Route("/product/{id}", name="product", requirements={"id": "\d+"})
+     */
+    public function productAction($id)
+    {
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findOneById($id);
 
-    if (!$product) {
-        throw $this->createNotFoundException('No product found with id: ' . $id);
+        if (!$product) {
+            throw $this->createNotFoundException('No product found with id: ' . $id);
+        }
+
+        return $this->render('default/product.html.twig',
+            array('product' => $product)
+        );
     }
-
-    return $this->render('default/product.html.twig',
-        array('product' => $product)
-    );
-}
 }
