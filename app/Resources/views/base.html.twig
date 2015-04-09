@@ -17,6 +17,11 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ path('homepage') }}">Catalogo</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{{ path('cart') }}" class="glyphicon glyphicon-shopping-cart"> Carrinho (1)</a>
+                    </li>
+                </ul>
                 <form action="{{ path('search') }}" class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                         <input type="text" name="find"
