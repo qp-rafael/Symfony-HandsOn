@@ -19,7 +19,12 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="{{ path('cart') }}" class="glyphicon glyphicon-shopping-cart"> Carrinho (1)</a>
+                        <a href="{{ path('cart') }}" class="glyphicon glyphicon-shopping-cart">
+                            Carrinho
+                            {% if app.session.get('cart') %}
+                                ({{ app.session.get('cart').quantity }})
+                            {% endif %}
+                        </a>
                     </li>
                 </ul>
                 <form action="{{ path('search') }}" class="navbar-form navbar-left" role="search">
@@ -33,6 +38,12 @@
                 </form>
             </div>
         </nav>
+
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-warning alert-dismissable">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
 
         {% block body %}{% endblock %}
 
