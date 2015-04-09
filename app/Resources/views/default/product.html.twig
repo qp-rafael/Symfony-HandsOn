@@ -4,6 +4,10 @@
     Produto{{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+<link href="{{ asset('css/product.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
     <div class="container">
         <div class="row">
