@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class CatalogController extends Controller
 {
@@ -40,6 +41,31 @@ class CatalogController extends Controller
 
         return $this->render('catalog/product.html.twig',
             array('product' => $product)
+        );
+    }
+
+    /**
+     * @Route("/search", name="search")
+     */
+    public function searchAction(Request $request)
+    {
+        $find = $request->query->get('find');
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('
+            SELECT p
+            FROM AppBundle:Product p
+            WHERE p.name LIKE :find
+        ')->setParameter('find', '%'.$find.'%');
+
+        $products = $query->getResult();
+
+        if (empty($products)) {
+            throw $this->createNotFoundException('No products available');
+        }
+
+        return $this->render('catalog/index.html.twig',
+            array('products' => $products, 'find' => $find)
         );
     }
 }
