@@ -20,6 +20,6 @@ class CatalogController extends Controller
      */
     public function productAction()
     {
-        return $this->render('default/product.html.twig');
+        return $this->render('catalog/product.html.twig');
     }
 }
