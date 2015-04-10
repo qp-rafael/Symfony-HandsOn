@@ -53,18 +53,21 @@ class CatalogController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery('
-            SELECT p
-            FROM AppBundle:Product p
-            WHERE p.name LIKE :find
-        ')->setParameter('find', '%'.$find.'%');
+                SELECT p
+                FROM AppBundle:Product p
+                WHERE p.name LIKE :find
+            ')->setParameter('find', '%'.$find.'%');
 
         $products = $query->getResult();
 
-        if (empty($products)) {
-            throw $this->createNotFoundException('No products available');
+        if (!$products) {
+            $this->addFlash('notice',
+                'Nenhum resultado encontrado para pesquisa: '.$find);
+
+            return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('catalog/index.html.twig',
+        return $this->render('AppBundle:Default:index.html.twig',
             array('products' => $products, 'find' => $find)
         );
     }
