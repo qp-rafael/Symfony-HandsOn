@@ -12,14 +12,34 @@ class CatalogController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('catalog/index.html.twig');
+        $products = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findAll();
+
+        if (empty($products)) {
+            throw $this->createNotFoundException('No products avaiable');
+        }
+
+        return $this->render('catalog/index.html.twig',
+            array('products' => $products)
+        );
     }
 
     /**
-     * @Route("/product", name="product")
+     * @Route("/product/{id}", name="product", requirements={"id": "\d+"})
      */
-    public function productAction()
+    public function productAction($id)
     {
-        return $this->render('catalog/product.html.twig');
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->findOneById($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException('No product found with id: ' . $id);
+        }
+
+        return $this->render('catalog/product.html.twig',
+            array('product' => $product)
+        );
     }
 }
