@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class CatalogController extends Controller
 {
     /**
      * @Route("/", name="homepage")
@@ -21,7 +21,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('No products avaiable');
         }
 
-        return $this->render('default/index.html.twig',
+        return $this->render('catalog/index.html.twig',
             array('products' => $products)
         );
     }
@@ -39,7 +39,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('No product found with id: ' . $id);
         }
 
-        return $this->render('default/product.html.twig',
+        return $this->render('catalog/product.html.twig',
             array('product' => $product)
         );
     }
@@ -64,7 +64,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('No products available');
         }
 
-        return $this->render('default/index.html.twig',
+        return $this->render('catalog/index.html.twig',
             array('products' => $products, 'find' => $find)
         );
     }
