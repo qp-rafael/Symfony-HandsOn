@@ -67,7 +67,7 @@ class CatalogController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('AppBundle:Default:index.html.twig',
+        return $this->render('catalog/index.html.twig',
             array('products' => $products, 'find' => $find)
         );
     }
