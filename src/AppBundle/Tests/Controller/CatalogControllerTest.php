@@ -20,7 +20,7 @@ class CatalogControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/product');
+        $client->request('GET', '/product/1');
 
         $this->assertTrue($client->getResponse()->isSuccessful(),
             'No path to "/product". Someone must be notified?');
