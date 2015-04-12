@@ -12,8 +12,13 @@
             <div class="panel-body">
 
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-                    {{ form_widget(form) }}
-                    <input type="submit" value="Create">
+                {{ form_errors(form) }}
+
+                {{ form_row(form.name) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password) }}
+                {{ form_row(form.address) }}
+                <input type="submit" value="Update">
                 {{ form_end(form) }}
 
             </div>

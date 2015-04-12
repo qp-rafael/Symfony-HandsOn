@@ -74,4 +74,30 @@ class UserController extends Controller
             array('form' => $form->createView())
         );
     }
+
+/**
+ * @Route("/account", name="account")
+ */
+public function accountAction(Request $request)
+{
+    if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        return $this->redirectToRoute('login');
+    }
+
+    $user = $this->get('security.context')->getToken()->getUser();
+    $form = $this->createForm(new UserType(), $user);
+
+    $form->handleRequest($request);
+    if ($form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        $this->addFlash('notice', 'Usuario atualizado com sucesso.');
+    }
+
+    return $this->render('user/account.html.twig',
+        array('form' => $form->createView())
+    );
+}
 }

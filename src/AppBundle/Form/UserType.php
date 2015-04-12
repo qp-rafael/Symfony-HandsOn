@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use AppBundle\Form\EventListener\AddPasswordFieldSubscriber;
 
 class UserType extends AbstractType
 {
@@ -17,8 +18,9 @@ class UserType extends AbstractType
         $builder
             ->add('name')
             ->add('email', 'email')
-            ->add('password', 'password')
             ->add('address', new AddressType());
+
+        $builder->addEventSubscriber(new AddPasswordFieldSubscriber());
     }
 
     /**
