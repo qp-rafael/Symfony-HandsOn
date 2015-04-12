@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity
+ * @UniqueEntity("email")
  */
 class User
 {
@@ -22,31 +26,50 @@ class User
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Address", inversedBy="users", cascade={"persist"})
-     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
-     */
-    protected $address;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "255",
+     *      minMessage = "Your name must be at least {{ limit }} characters length",
+     *      maxMessage = "Your name cannot be longer than {{ limit }} characters length"
+     * )
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *      message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=40)
+     * @ORM\Column(name="password", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "100",
+     *      minMessage = "Your password must be at least {{ limit }} characters length",
+     *      maxMessage = "Your password cannot be longer than {{ limit }} characters length"
+     * )
      */
     private $password;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="users", cascade={"persist"})
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+     */
+    protected $address;
 
 
     /**

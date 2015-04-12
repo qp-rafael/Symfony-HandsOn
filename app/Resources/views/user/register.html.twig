@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Cadastre-se{{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Cadastre-se</h1>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_widget(form) }}
+                    <input type="submit" value="Create">
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+
+    </div>
+{% endblock%}

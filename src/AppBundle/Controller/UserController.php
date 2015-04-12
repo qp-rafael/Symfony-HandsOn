@@ -4,7 +4,9 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
 
 class UserController extends Controller
 {
@@ -32,20 +34,25 @@ class UserController extends Controller
         // as the route is handled by the Security system
     }
 
-/**
- * @Route("/register", name="register")
- */
-public function registerAction()
-{
-    $user = new User();
-    $user->setName('Fulano');
-    $user->setEmail('fulano@email.com');
-    $user->setPassword('123');
+    /**
+     * @Route("/register", name="register")
+     */
+    public function registerAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(new UserType(), $user);
 
-    $em = $this->getDoctrine()->getManager();
-    $em->persist($user);
-    $em->flush();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
-    return $this->redirectToRoute('login');
-}
+            return $this->redirectToRoute('checkout');
+        }
+
+        return $this->render('user/register.html.twig',
+            array('form' => $form->createView())
+        );
+    }
 }
