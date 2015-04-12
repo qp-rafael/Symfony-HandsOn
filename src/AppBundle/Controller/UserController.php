@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\User;
 
 class UserController extends Controller
 {
@@ -30,4 +31,21 @@ class UserController extends Controller
         // this action will not be executed,
         // as the route is handled by the Security system
     }
+
+/**
+ * @Route("/register", name="register")
+ */
+public function registerAction()
+{
+    $user = new User();
+    $user->setName('Fulano');
+    $user->setEmail('fulano@email.com');
+    $user->setPassword('123');
+
+    $em = $this->getDoctrine()->getManager();
+    $em->persist($user);
+    $em->flush();
+
+    return $this->redirectToRoute('login');
+}
 }
