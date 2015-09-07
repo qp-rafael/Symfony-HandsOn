@@ -101,12 +101,22 @@
                             rows.appendChild(row);
 
                             var methodCell = document.createElement('td');
+                            if (request.error) {
+                                methodCell.className = 'sf-ajax-request-error';
+                            }
                             methodCell.textContent = request.method;
                             row.appendChild(methodCell);
 
                             var pathCell = document.createElement('td');
                             pathCell.className = 'sf-ajax-request-url';
-                            pathCell.textContent = request.url;
+                            if ('GET' === request.method) {
+                                var pathLink = document.createElement('a');
+                                pathLink.setAttribute('href', request.url);
+                                pathLink.textContent = request.url;
+                                pathCell.appendChild(pathLink);
+                            } else {
+                                pathCell.textContent = request.url;
+                            }
                             pathCell.setAttribute('title', request.url);
                             row.appendChild(pathCell);
 
@@ -196,14 +206,24 @@
         }
 
         {% if excluded_ajax_paths is defined %}
-            if (window.XMLHttpRequest && XMLHttpRequest.addEventListener) {
+            if (window.XMLHttpRequest && XMLHttpRequest.prototype.addEventListener) {
                 var proxied = XMLHttpRequest.prototype.open;
 
                 XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
                     var self = this;
 
                     /* prevent logging AJAX calls to static and inline files, like templates */
-                    if (url.substr(0, 1) === '/' && !url.match(new RegExp("{{ excluded_ajax_paths }}"))) {
+                    var path = url;
+                    if (url.substr(0, 1) === '/') {
+                        if (0 === url.indexOf('{{ request.basePath|e('js') }}')) {
+                            path = url.substr({{ request.basePath|length }});
+                        }
+                    }
+                    else if (0 === url.indexOf('{{ (request.schemeAndHttpHost ~ request.basePath)|e('js') }}')) {
+                        path = url.substr({{ (request.schemeAndHttpHost ~ request.basePath)|length }});
+                    }
+
+                    if (path.substr(0, 1) === '/' && !path.match(new RegExp({{ excluded_ajax_paths|json_encode|raw }}))) {
                         var stackElement = {
                             loading: true,
                             error: false,

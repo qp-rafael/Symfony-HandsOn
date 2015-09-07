@@ -230,7 +230,7 @@ class FormValidatorTest extends AbstractConstraintValidatorTest
             ->setParameter('{{ foo }}', 'bar')
             ->setInvalidValue('foo')
             ->setCode(Form::NOT_SYNCHRONIZED_ERROR)
-            ->setCause($this->context instanceof ExecutionContextInterface ? $form->getTransformationFailure() : null)
+            ->setCause($form->getTransformationFailure())
             ->assertRaised();
     }
 
@@ -265,7 +265,7 @@ class FormValidatorTest extends AbstractConstraintValidatorTest
             ->setParameter('{{ foo }}', 'bar')
             ->setInvalidValue('foo')
             ->setCode(Form::NOT_SYNCHRONIZED_ERROR)
-            ->setCause($this->context instanceof ExecutionContextInterface ? $form->getTransformationFailure() : null)
+            ->setCause($form->getTransformationFailure())
             ->assertRaised();
     }
 
@@ -299,7 +299,7 @@ class FormValidatorTest extends AbstractConstraintValidatorTest
             ->setParameter('{{ value }}', 'foo')
             ->setInvalidValue('foo')
             ->setCode(Form::NOT_SYNCHRONIZED_ERROR)
-            ->setCause($this->context instanceof ExecutionContextInterface ? $form->getTransformationFailure() : null)
+            ->setCause($form->getTransformationFailure())
             ->assertRaised();
     }
 
@@ -570,7 +570,7 @@ class FormValidatorTest extends AbstractConstraintValidatorTest
             ->add($this->getBuilder('child'))
             ->getForm();
 
-        $form->bind(array('foo' => 'bar'));
+        $form->submit(array('foo' => 'bar'));
 
         $context->expects($this->never())
             ->method('addViolation');

@@ -154,8 +154,8 @@ class CommandTest extends \PHPUnit_Framework_TestCase
     {
         $command = new \TestCommand();
         $command->addOption('foo');
-        $command->addArgument('foo');
-        $this->assertEquals('namespace:name [--foo] [foo]', $command->getSynopsis(), '->getSynopsis() returns the synopsis');
+        $command->addArgument('bar');
+        $this->assertEquals('namespace:name [--foo] [--] [<bar>]', $command->getSynopsis(), '->getSynopsis() returns the synopsis');
     }
 
     public function testGetHelper()
@@ -165,15 +165,6 @@ class CommandTest extends \PHPUnit_Framework_TestCase
         $command->setApplication($application);
         $formatterHelper = new FormatterHelper();
         $this->assertEquals($formatterHelper->getName(), $command->getHelper('formatter')->getName(), '->getHelper() returns the correct helper');
-    }
-
-    public function testGet()
-    {
-        $application = new Application();
-        $command = new \TestCommand();
-        $command->setApplication($application);
-        $formatterHelper = new FormatterHelper();
-        $this->assertEquals($formatterHelper->getName(), $command->getHelper('formatter')->getName(), '->__get() returns the correct helper');
     }
 
     public function testMergeApplicationDefinition()
@@ -323,8 +314,6 @@ class CommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyAsText()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $command = new \TestCommand();
         $command->setApplication(new Application());
         $tester = new CommandTester($command);
@@ -337,8 +326,6 @@ class CommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyAsXml()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $command = new \TestCommand();
         $command->setApplication(new Application());
         $tester = new CommandTester($command);
