@@ -94,10 +94,12 @@ class Definition
      * @return Definition The current instance
      *
      * @api
-     * @deprecated Deprecated since version 2.6, to be removed in 3.0.
+     * @deprecated since version 2.6, to be removed in 3.0.
      */
     public function setFactoryClass($factoryClass)
     {
+        @trigger_error(sprintf('%s(%s) is deprecated since version 2.6 and will be removed in 3.0. Use Definition::setFactory() instead.', __METHOD__, $factoryClass), E_USER_DEPRECATED);
+
         $this->factoryClass = $factoryClass;
 
         return $this;
@@ -109,10 +111,14 @@ class Definition
      * @return string|null The factory class name
      *
      * @api
-     * @deprecated Deprecated since version 2.6, to be removed in 3.0.
+     * @deprecated since version 2.6, to be removed in 3.0.
      */
-    public function getFactoryClass()
+    public function getFactoryClass($triggerDeprecationError = true)
     {
+        if ($triggerDeprecationError) {
+            @trigger_error('The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
+
         return $this->factoryClass;
     }
 
@@ -124,10 +130,12 @@ class Definition
      * @return Definition The current instance
      *
      * @api
-     * @deprecated Deprecated since version 2.6, to be removed in 3.0.
+     * @deprecated since version 2.6, to be removed in 3.0.
      */
     public function setFactoryMethod($factoryMethod)
     {
+        @trigger_error(sprintf('%s(%s) is deprecated since version 2.6 and will be removed in 3.0. Use Definition::setFactory() instead.', __METHOD__, $factoryMethod), E_USER_DEPRECATED);
+
         $this->factoryMethod = $factoryMethod;
 
         return $this;
@@ -174,10 +182,14 @@ class Definition
      * @return string|null The factory method name
      *
      * @api
-     * @deprecated Deprecated since version 2.6, to be removed in 3.0.
+     * @deprecated since version 2.6, to be removed in 3.0.
      */
-    public function getFactoryMethod()
+    public function getFactoryMethod($triggerDeprecationError = true)
     {
+        if ($triggerDeprecationError) {
+            @trigger_error('The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
+
         return $this->factoryMethod;
     }
 
@@ -189,10 +201,12 @@ class Definition
      * @return Definition The current instance
      *
      * @api
-     * @deprecated Deprecated since version 2.6, to be removed in 3.0.
+     * @deprecated since version 2.6, to be removed in 3.0.
      */
     public function setFactoryService($factoryService)
     {
+        @trigger_error(sprintf('%s(%s) is deprecated since version 2.6 and will be removed in 3.0. Use Definition::setFactory() instead.', __METHOD__, $factoryService), E_USER_DEPRECATED);
+
         $this->factoryService = $factoryService;
 
         return $this;
@@ -204,10 +218,14 @@ class Definition
      * @return string|null The factory service id
      *
      * @api
-     * @deprecated Deprecated since version 2.6, to be removed in 3.0.
+     * @deprecated since version 2.6, to be removed in 3.0.
      */
-    public function getFactoryService()
+    public function getFactoryService($triggerDeprecationError = true)
     {
+        if ($triggerDeprecationError) {
+            @trigger_error('The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
+
         return $this->factoryService;
     }
 
@@ -643,9 +661,15 @@ class Definition
      * @return Definition The current instance
      *
      * @api
+     *
+     * @deprecated since version 2.7, will be removed in 3.0.
      */
-    public function setSynchronized($boolean)
+    public function setSynchronized($boolean, $triggerDeprecationError = true)
     {
+        if ($triggerDeprecationError) {
+            @trigger_error('The '.__METHOD__.' method is deprecated since version 2.7 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
+
         $this->synchronized = (bool) $boolean;
 
         return $this;
@@ -657,9 +681,15 @@ class Definition
      * @return bool
      *
      * @api
+     *
+     * @deprecated since version 2.7, will be removed in 3.0.
      */
-    public function isSynchronized()
+    public function isSynchronized($triggerDeprecationError = true)
     {
+        if ($triggerDeprecationError) {
+            @trigger_error('The '.__METHOD__.' method is deprecated since version 2.7 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
+
         return $this->synchronized;
     }
 
