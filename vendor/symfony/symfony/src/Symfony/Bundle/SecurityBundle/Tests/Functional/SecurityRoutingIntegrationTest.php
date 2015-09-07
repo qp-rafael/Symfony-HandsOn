@@ -30,10 +30,6 @@ class SecurityRoutingIntegrationTest extends WebTestCase
      */
     public function testRoutingErrorIsExposedWhenNotProtected($config)
     {
-        if ('\\' === DIRECTORY_SEPARATOR && PHP_VERSION_ID < 50309) {
-            $this->markTestSkipped('Test hangs on Windows & PHP due to https://bugs.php.net/bug.php?id=60120 fixed in http://svn.php.net/viewvc?view=revision&revision=318366');
-        }
-
         $client = $this->createClient(array('test_case' => 'StandardFormLogin', 'root_config' => $config));
         $client->insulate();
         $client->request('GET', '/unprotected_resource');
@@ -46,10 +42,6 @@ class SecurityRoutingIntegrationTest extends WebTestCase
      */
     public function testRoutingErrorIsNotExposedForProtectedResourceWhenLoggedInWithInsufficientRights($config)
     {
-        if ('\\' === DIRECTORY_SEPARATOR && PHP_VERSION_ID < 50309) {
-            $this->markTestSkipped('Test hangs on Windows & PHP due to https://bugs.php.net/bug.php?id=60120 fixed in http://svn.php.net/viewvc?view=revision&revision=318366');
-        }
-
         $client = $this->createClient(array('test_case' => 'StandardFormLogin', 'root_config' => $config));
         $client->insulate();
 
@@ -65,7 +57,6 @@ class SecurityRoutingIntegrationTest extends WebTestCase
 
     /**
      * @dataProvider getConfigs
-     * @group ip_whitelist
      */
     public function testSecurityConfigurationForSingleIPAddress($config)
     {
@@ -78,7 +69,6 @@ class SecurityRoutingIntegrationTest extends WebTestCase
 
     /**
      * @dataProvider getConfigs
-     * @group ip_whitelist
      */
     public function testSecurityConfigurationForMultipleIPAddresses($config)
     {
