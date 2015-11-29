@@ -1,7 +1,7 @@
 Symfony-HandsOn
 ===============
 
-Criando um "mini" e-Commerce utilizando o framework PHP Symfony 2.6
+Criando um "mini" e-Commerce utilizando o framework PHP Symfony 2.7
 
 **Link da Apostila**: https://docs.google.com/document/d/1M0YbczLq_ipoFC7WOTJUC85R_JWe9fh_pfojYXWzUT0/pub
 
